@@ -24,12 +24,12 @@ envType='master'
 ipAddress=`curl -s -4 https://api.ip.sb/ip`
 mysqlPWD=$(echo -n ${RANDOM} | md5sum | cut -b -16)
 
-mysqlUrl='https://repo.mysql.com'
-mariaDBUrl='https://yum.mariadb.org'
+mysqlUrl='http://repo.mysql.com'
+mariaDBUrl='http://yum.mariadb.org'
 phpUrl='https://rpms.remirepo.net'
 LiteSpeedUrl='http://rpms.litespeedtech.com'
-mysqlUrl_CN='https://mirrors.ustc.edu.cn/mysql-repo'
-mariaDBUrl_CN='https://mirrors.ustc.edu.cn/mariadb/yum'
+mysqlUrl_CN='http://mirrors.ustc.edu.cn/mysql-repo'
+mariaDBUrl_CN='http://mirrors.ustc.edu.cn/mariadb/yum'
 phpUrl_CN='https://mirrors.ustc.edu.cn/remi'
 LiteSpeedUrl_CN='http://litespeed-rpm.mf8.biz'
 isUpdate='0'
@@ -215,6 +215,7 @@ runInstall(){
       rpm --import /tmp/LLStack-${envType}/keys/RPM-GPG-KEY-mysql
       rpm -Uvh ${mysqlRepoUrl}/mysql-community-release-el7.rpm
       find /etc/yum.repos.d/ -maxdepth 1 -name "mysql-community*.repo" -type f -print0 | xargs -0 sed -i "s@${mysqlUrl}@${mysqlRepoUrl}@g"
+      
       installDB='mysqld'
 
       case ${mysqlV} in
@@ -233,6 +234,7 @@ runInstall(){
         9)
         yum-config-manager --enable mysql80-community
         yum-config-manager --disable mysql55-community mysql56-community mysql57-community
+        sed -i "s@${mysqlUrl}@${mysqlRepoUrl}@g" /etc/yum.repos.d/mysql-community.repo
         ;;
       esac
     fi
