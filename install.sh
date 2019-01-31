@@ -329,6 +329,9 @@ runInstall(){
       else
         mysqld --initialize-insecure --user=mysql
       fi
+
+      if [ "${mysqlV}" = "9" ]; then
+      sed -i "s@# default-authentication-plugin=mysql_native_password@default-authentication-plugin=mysql_native_password@g" /etc/my.cnf
     fi
   fi
 
