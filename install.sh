@@ -450,7 +450,7 @@ runInstall(){
     mysqladmin -u root -p"${mysqlPWD}" -h "localhost" password "${mysqlPWD}"
     mysql -u root -p"${mysqlPWD}" -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');DELETE FROM mysql.user WHERE User='';DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';FLUSH PRIVILEGES;"
     if [ "${mysqlV}" = "9" ]; then
-    mysql -u root -p"${mysqlPWD}" -e "alter user root@'localhost' identified by \"${mysqlPWD}\";"
+    mysql -u root -p"${mysqlPWD}" -e "alter user root@'localhost' IDENTIFIED WITH mysql_native_password by \"${mysqlPWD}\";"
     fi
 
     echo "${mysqlPWD}" > /home/initialPWD.txt
