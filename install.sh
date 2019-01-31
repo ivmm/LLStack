@@ -213,7 +213,7 @@ runInstall(){
       echo -e "[mariadb]\\nname = MariaDB\\nbaseurl = ${mariaDBRepoUrl}/${mariadbV}/centos7-amd64\\ngpgkey=${mariaDBRepoUrl}/RPM-GPG-KEY-MariaDB\\ngpgcheck=1" > /etc/yum.repos.d/mariadb.repo
     elif [[ "${mysqlV}" = "6" || "${mysqlV}" = "7" || "${mysqlV}" = "8" || "${mysqlV}" = "9" ]]; then
       rpm --import /tmp/LLStack-${envType}/keys/RPM-GPG-KEY-mysql
-      rpm -Uvh ${mysqlRepoUrl}/mysql57-community-release-el7-11.noarch.rpm
+      rpm -Uvh ${mysqlRepoUrl}/mysql57-community-release-el7.noarch.rpm
       find /etc/yum.repos.d/ -maxdepth 1 -name "mysql-community*.repo" -type f -print0 | xargs -0 sed -i "s@${mysqlUrl}@${mysqlRepoUrl}@g"
       installDB='mysqld'
 
