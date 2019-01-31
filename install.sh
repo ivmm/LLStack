@@ -422,11 +422,6 @@ runInstall(){
     fi
   fi
 
-  cp -a /tmp/LLStack-${envType}/etc/rc.d /etc/
-
-  chmod +x /etc/rc.d/init.d/vbackup
-  chmod +x /etc/rc.d/init.d/vhost
-
   showNotice "Start service"
 
   systemctl enable firewalld.service
@@ -435,7 +430,6 @@ runInstall(){
   firewall-cmd --permanent --zone=public --add-service=http
   firewall-cmd --permanent --zone=public --add-service=https
   firewall-cmd --permanent --zone=public --add-port=7080/tcp
-  firewall-cmd --permanent --zone=public --add-port=8088/tcp
   firewall-cmd --reload
 
   if [ "${mysqlV}" != '0' ]; then
@@ -461,6 +455,8 @@ runInstall(){
     systemctl restart lsws.service
   fi
 
+  wget -P /root/ https://raw.githubusercontent.com/ivmm/LLStack/master/vhost.sh
+
   if [[ -f "/usr/sbin/mysqld" || -f "/usr/sbin/php-check" || -f "/usr/local/lsws/bin/httpd" ]]; then
     echo "================================================================"
     echo -e "\\033[42m [LLStack] Install completed. \\033[0m"
@@ -469,6 +465,7 @@ runInstall(){
       echo -e "\\033[34m Web Demo Site: \\033[0m http://${ipAddress}"
       echo -e "\\033[34m Web Demo Dir: \\033[0m /home/demo/public_html"
       echo -e "\\033[34m LiteSpeed: \\033[0m /usr/local/lsws/"
+      echo -e "\\033[34m LiteSpeed WebAdmin Console URL: \\033[0m http://${ipAddress}:7080"
       echo -e "\\033[34m LiteSpeed WebAdmin Console Username: \\033[0m llstackadmin"
       echo -e "\\033[34m LiteSpeed WebAdmin Console Paasword: \\033[0m $LSPASSRAND"
     fi

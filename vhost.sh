@@ -57,8 +57,8 @@ fi
 
 #LSPHP Version
 Llsphpversion=$(cat /usr/share/lsphp-default-version)
-echo "Please input The PHP Version(If you have installed multiple versions of PHP):"
-read -p "PHP Version,Example: lsphp71,lsphp70 or lsphp56" -r -e -i "${Llsphpversion}" lsphpversion
+echo "Please input The PHP Version(If you have installed multiple versions of PHP): "
+read -p "PHP Version,Example: lsphp71,lsphp70 or lsphp56: " -r -e -i "${Llsphpversion}" lsphpversion
 if [ "$lsphpversion" = "" ]; then
   lsphpversion=$(cat /usr/share/lsphp-default-version)
 fi
@@ -128,19 +128,19 @@ sed -i 's/'$lend'/'$l1'\n'$l2'\n'$l3'\n'$l4'\n'$l5'\n'$l6'\n'$l7'\n'$l8'\n'$l9'\
 cat >>/usr/local/lsws/conf/vhosts/$domain.xml<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <virtualHostConfig>
-  <docRoot>$VH_ROOT/public_html</docRoot>
+  <docRoot>/home/$domain/public_html</docRoot>
   <adminEmails>$webmasteremail</adminEmails>
   <enableGzip>1</enableGzip>
   <logging>
     <log>
       <useServer>1</useServer>
-      <fileName>$VH_ROOT/logs/$VH_ROOT_errors.log</fileName>
+      <fileName>/home/$domain/logs/$domain_errors.log</fileName>
       <logLevel>ERROR</logLevel>
       <rollingSize>100M</rollingSize>
     </log>
     <accessLog>
       <useServer>0</useServer>
-      <fileName>$VH_ROOT/logs/$VH_NAME.access.log</fileName>
+      <fileName>/home/$domain/logs/$domain.access.log</fileName>
       <logHeaders>3</logHeaders>
       <rollingSize>100M</rollingSize>
       <keepDays>30</keepDays>
@@ -163,7 +163,7 @@ cat >>/usr/local/lsws/conf/vhosts/$domain.xml<<EOF
   </expires>
   <cache>
     <storage>
-      <cacheStorePath>$VH_ROOT/cache</cacheStorePath>
+      <cacheStorePath>/home/$domain/cache</cacheStorePath>
       <litemage>0</litemage>
     </storage>
   </cache>
@@ -196,7 +196,7 @@ cat >>/usr/local/lsws/conf/vhosts/$domain.xml<<EOF
     <context>
       <type>cgi</type>
       <uri>/cgi-bin/</uri>
-      <location>$VH_ROOT/cgi-bin/</location>
+      <location>/home/$domain/cgi-bin/</location>
       <accessControl>
       </accessControl>
       <rewrite>
