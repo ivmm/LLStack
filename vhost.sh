@@ -110,19 +110,12 @@ vend="<\/virtualHostList>"
 sed -i 's/'$vend'/'$v1'\n'$v2'\n'$v3'\n'$v4'\n'$v5'\n'$v6'\n'$v7'\n'$v8'\n'$v9'\n'$v10'\n&/' /usr/local/lsws/conf/httpd_config.xml
 
 #add httpd conf listen
-l1="<listener>"
-l2="<name>$domain<\/name>"
-l3="<address>*:80<\/address>"
-l4="<secure>0<\/secure>"
-l5="<vhostMapList>"
-l6="<vhostMap>"
-l7="<vhost>$domain<\/vhost>"
-l8="<domain>$domain,$moredomain<\/domain>"
-l9="<\/vhostMap>"
-l10="<\/vhostMapList>"
-l11="<\/listener>"
-lend="<\/listenerList>"
-sed -i 's/'$lend'/'$l1'\n'$l2'\n'$l3'\n'$l4'\n'$l5'\n'$l6'\n'$l7'\n'$l8'\n'$l9'\n'$l10'\n'$l11'\n&/' /usr/local/lsws/conf/httpd_config.xml
+l1="<vhostMap>"
+l2="<vhost>$domain<\/vhost>"
+l3="<domain>$domain,$moredomain<\/domain>"
+l4="<\/vhostMap>"
+lend="<\/vhostMapList>"
+sed -i 's/'$lend'/'$l1'\n'$l2'\n'$l3'\n'$l4'\n&/' /usr/local/lsws/conf/httpd_config.xml
 
 #add vhost conf
 cat >>/usr/local/lsws/conf/vhosts/$domain.xml<<EOF

@@ -193,16 +193,6 @@
   </railsDefaults>
   <virtualHostList>
     <virtualHost>
-      <name>Example</name>
-      <vhRoot>$SERVER_ROOT/DEFAULT/</vhRoot>
-      <configFile>$VH_ROOT/conf/vhconf.xml</configFile>
-      <allowSymbolLink>1</allowSymbolLink>
-      <enableScript>1</enableScript>
-      <restrained>1</restrained>
-      <setUIDMode>0</setUIDMode>
-      <chrootMode>0</chrootMode>
-    </virtualHost>
-    <virtualHost>
       <name>LLStack-demo</name>
       <vhRoot>/home/demo</vhRoot>
       <configFile>$SERVER_ROOT/conf/vhosts/$VH_NAME.xml</configFile>
@@ -215,18 +205,18 @@
   </virtualHostList>
   <listenerList>
     <listener>
-      <name>Default</name>
-      <address>*:8088</address>
+      <name>LLStack</name>
+      <address>*:80</address>
       <secure>0</secure>
       <vhostMapList>
         <vhostMap>
-          <vhost>Example</vhost>
+          <vhost>LLStack-demo</vhost>
           <domain>*</domain>
         </vhostMap>
       </vhostMapList>
     </listener>
     <listener>
-      <name>LLStack-demo</name>
+      <name>LLStack</name>
       <address>*:80</address>
       <secure>0</secure>
       <vhostMapList>
