@@ -428,6 +428,14 @@ runInstall(){
     fi
   fi
 
+  mkdir -p /home/demo/public_html/phpMyAdmin/tmp/
+  chmod 0777 /home/demo/public_html/phpMyAdmin/tmp/
+  cp /home/demo/public_html/phpMyAdmin/libraries/config.default.php /home/demo/public_html/phpMyAdmin/config.inc.php
+  sed -i "s@UploadDir.*@UploadDir'\] = 'upload';@" /home/demo/public_html/phpMyAdmin/config.inc.php
+  sed -i "s@SaveDir.*@SaveDir'\] = 'save';@" /home/demo/public_html/phpMyAdmin/config.inc.php
+  sed -i "s@host'\].*@host'\] = '127.0.0.1';@" /home/demo/public_html/phpMyAdmin/config.inc.php
+  sed -i "s@blowfish_secret.*;@blowfish_secret\'\] = \'$(cat /dev/urandom | head -1 | base64 | head -c 45)\';@" /home/demo/public_html/phpMyAdmin/config.inc.php
+
   showNotice "Start service"
 
   systemctl enable firewalld.service
@@ -450,7 +458,7 @@ runInstall(){
     mysqladmin -u root -p"${mysqlPWD}" -h "localhost" password "${mysqlPWD}"
     mysql -u root -p"${mysqlPWD}" -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');DELETE FROM mysql.user WHERE User='';DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';FLUSH PRIVILEGES;"
     if [ "${mysqlV}" = "9" ]; then
-    mysql -u root -p"${mysqlPWD}" -e "alter user root@'localhost' IDENTIFIED WITH mysql_native_password by \"${mysqlPWD}\";"
+    mysql -u root -p"${mysqlPWD}" -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY \"${mysqlPWD}\";FLUSH PRIVILEGES;"
     fi
 
     echo "${mysqlPWD}" > /home/initialPWD.txt
