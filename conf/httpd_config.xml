@@ -215,33 +215,5 @@
         </vhostMap>
       </vhostMapList>
     </listener>
-    <listener>
-      <name>LLStack</name>
-      <address>*:80</address>
-      <secure>0</secure>
-      <vhostMapList>
-        <vhostMap>
-          <vhost>LLStack-demo</vhost>
-          <domain>*</domain>
-        </vhostMap>
-      </vhostMapList>
-    </listener>
   </listenerList>
-  <vhTemplateList>
-    <vhTemplate>
-      <name>centralConfigLog</name>
-      <templateFile>$SERVER_ROOT/conf/templates/ccl.xml</templateFile>
-      <listeners>Default</listeners>
-    </vhTemplate>
-    <vhTemplate>
-      <name>PHP_SuEXEC</name>
-      <templateFile>$SERVER_ROOT/conf/templates/phpsuexec.xml</templateFile>
-      <listeners>Default</listeners>
-    </vhTemplate>
-    <vhTemplate>
-      <name>EasyRailsWithSuEXEC</name>
-      <templateFile>$SERVER_ROOT/conf/templates/rails.xml</templateFile>
-      <listeners>Default</listeners>
-    </vhTemplate>
-  </vhTemplateList>
 </httpServerConfig>

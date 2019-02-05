@@ -367,7 +367,7 @@ runInstall(){
       cp -a /root/trial.key /usr/local/lsws/conf/trial.key
       /usr/local/lsws/bin/lshttpd -r
     else
-      echo "LiteSpeed Enterprise Web Server will not start without any authorization"
+       wget -q -t 1 -T 3 --output-document=/usr/local/lsws/conf/trial.key http://license2.litespeedtech.com/reseller/trial.key
     fi
 
 
@@ -528,7 +528,7 @@ runInstall(){
     echo "Start time: ${startDate}"
     echo "Completion time: $(date) (Use: $((($(date +%s)-startDateSecond)/60)) minute)"
     echo "Use: $((($(date +%s)-startDateSecond)/60)) minute"
-    echo "For more details see \\033[4mhttps://llstack.com\\033[0m"
+    echo -e "For more details see \\033[34m https://llstack.com \\033[0m"
     echo "================================================================"
   else
     echo -e "\\033[41m [LLStack] Sorry, Install Failed. \\033[0m"
