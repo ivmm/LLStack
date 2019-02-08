@@ -219,6 +219,12 @@
       <name>HTTPS</name>
       <address>*:443</address>
       <secure>1</secure>
+      <vhostMapList>
+        <vhostMap>
+          <vhost>LLStack-demo</vhost>
+          <domain>*</domain>
+        </vhostMap>
+      </vhostMapList>
       <keyFile>/home/demo/ssl/server.key</keyFile>
       <certFile>/home/demo/ssl/server.crt</certFile>
       <certChain>1</certChain>

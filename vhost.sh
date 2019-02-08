@@ -69,7 +69,7 @@ read -p "Do you want to add more domain name? (y/n)" add_more_domainame
     
 if [ "$add_more_domainame" = 'y' ] || [ "$add_more_domainame" = 'Y' ]; then
   echo "Please input domain name,example(www.mf8.biz,statics.mf8.biz,imgs.mf8.biz)"
-  read -p "Please use \",\" between each domain:" moredomain
+  read -p "Please use \",\" between each domain: " moredomain
   echo "==========================="
   echo domain list="$moredomain"
   echo "==========================="
@@ -81,13 +81,13 @@ read -p "Do you want to enable HTTPS? (y/n)" enablessl
     
 if [ "$enablessl" = 'y' ] || [ "$enablessl" = 'Y' ]; then
   echo "Please input the Private Key File Path"
-  read -p "Example:/home/demo/ssl/www.mf8.biz.key" privatekeypath
+  read -p "Example:/home/demo/ssl/www.mf8.biz.key " privatekeypath
   echo "Please input the Certificate File Path"
-  read -p "Example:/home/demo/ssl/www.mf8.biz.crt" certificatepath
-  read -p "Do you want to enable HTTP/3(QUIC)? (y/n)" enablequic
+  read -p "Example:/home/demo/ssl/www.mf8.biz.crt " certificatepath
+  read -p "Do you want to enable HTTP/3(QUIC)? (y/n) " enablequic
   echo "==========================="
   echo Private Key File Path="$privatekeypath"
-  echo Private Key File Path="$certificatepath"
+  echo Certificate File Path="$certificatepath"
   echo "==========================="
 fi
     
@@ -108,6 +108,8 @@ char=`get_char`
 #Mkdir for vhost
 mkdir -p /home/$domain/{public_html,logs,ssl,cgi-bin,cache}
 chown -R nobody:nobody /home/$domain/public_html
+chown lsadm:lsadmin $privatekeypath
+chown lsadm:lsadmin $certificatepath
 
 #add httpd conf Virtual host
 cp -f /usr/local/lsws/conf/httpd_config.xml /usr/local/lsws/conf/httpd_config.xml.bak
@@ -246,7 +248,7 @@ cat >>/usr/local/lsws/conf/vhosts/$domain.xml<<EOF
 EOF
 
     if [ "$enablequic" = 'y' ] || [ "$enablequic" = 'Y' ]; then
-      sed -i "s@<enableQuic>0</enableQuic>@<enableQuic>1</enableQuic>@g" /usr/local/lsws/conf/vhosts/LLStack-demo.xml
+      sed -i "s@<enableQuic>0<\/enableQuic>@<enableQuic>1<\/enableQuic>@g" /usr/local/lsws/conf/vhosts/$domain.xml
     fi
 
 else 
