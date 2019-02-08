@@ -261,43 +261,43 @@ runInstall(){
 
     case ${phpV} in
       1)
-      yum install -y php54-php-litespeed php54-php-bcmath php54-php-gd php54-php-json php54-php-mbstring php54-php-mcrypt php54-php-mysqlnd php54-php-opcache php54-php-pdo php54-php-pecl-crypto php54-php-pecl-mcrypt php54-php-pecl-geoip php54-php-pecl-zip php54-php-recode php54-php-snmp php54-php-soap php54-php-xml
+      yum install -y php54-php-litespeed php54-php-cli php54-php-bcmath php54-php-gd php54-php-json php54-php-mbstring php54-php-mcrypt php54-php-mysqlnd php54-php-opcache php54-php-pdo php54-php-pecl-crypto php54-php-pecl-mcrypt php54-php-pecl-geoip php54-php-pecl-zip php54-php-recode php54-php-snmp php54-php-soap php54-php-xml
       ln -s /opt/remi/php54/root/usr/bin/php /usr/sbin/php-check
       touch /usr/share/lsphp-default-version
       echo "lsphp54" > /usr/share/lsphp-default-version
       ;;
       2)
-      yum install -y php55-php-litespeed php55-php-bcmath php55-php-gd php55-php-json php55-php-mbstring php55-php-mcrypt php55-php-mysqlnd php55-php-opcache php55-php-pdo php55-php-pecl-crypto php55-php-pecl-mcrypt php55-php-pecl-geoip php55-php-pecl-zip php55-php-recode php55-php-snmp php55-php-soap php55-php-xml
+      yum install -y php55-php-litespeed php55-php-cli php55-php-bcmath php55-php-gd php55-php-json php55-php-mbstring php55-php-mcrypt php55-php-mysqlnd php55-php-opcache php55-php-pdo php55-php-pecl-crypto php55-php-pecl-mcrypt php55-php-pecl-geoip php55-php-pecl-zip php55-php-recode php55-php-snmp php55-php-soap php55-php-xml
       ln -s /opt/remi/php55/root/usr/bin/php /usr/sbin/php-check
       touch /usr/share/lsphp-default-version
       echo "lsphp55" > /usr/share/lsphp-default-version
       ;;
       3)
-      yum install -y php56-php-litespeed php56-php-bcmath php56-php-gd php56-php-json php56-php-mbstring php56-php-mcrypt php56-php-mysqlnd php56-php-opcache php56-php-pdo php56-php-pecl-crypto php56-php-pecl-mcrypt php56-php-pecl-geoip php56-php-pecl-zip php56-php-recode php56-php-snmp php56-php-soap php56-php-xml
+      yum install -y php56-php-litespeed php56-php-cli php56-php-bcmath php56-php-gd php56-php-json php56-php-mbstring php56-php-mcrypt php56-php-mysqlnd php56-php-opcache php56-php-pdo php56-php-pecl-crypto php56-php-pecl-mcrypt php56-php-pecl-geoip php56-php-pecl-zip php56-php-recode php56-php-snmp php56-php-soap php56-php-xml
       ln -s /opt/remi/php56/root/usr/bin/php /usr/sbin/php-check
       touch /usr/share/lsphp-default-version
       echo "lsphp56" > /usr/share/lsphp-default-version
       ;;
       4)
-      yum install -y php70-php-litespeed php70-php-bcmath php70-php-gd php70-php-json php70-php-mbstring php70-php-mcrypt php70-php-mysqlnd php70-php-opcache php70-php-pdo php70-php-pecl-crypto php70-php-pecl-mcrypt php70-php-pecl-geoip php70-php-pecl-zip php70-php-recode php70-php-snmp php70-php-soap php70-php-xml
+      yum install -y php70-php-litespeed php70-php-cli php70-php-bcmath php70-php-gd php70-php-json php70-php-mbstring php70-php-mcrypt php70-php-mysqlnd php70-php-opcache php70-php-pdo php70-php-pecl-crypto php70-php-pecl-mcrypt php70-php-pecl-geoip php70-php-pecl-zip php70-php-recode php70-php-snmp php70-php-soap php70-php-xml
       ln -s /opt/remi/php70/root/usr/bin/php /usr/sbin/php-check
       touch /usr/share/lsphp-default-version
       echo "lsphp70" > /usr/share/lsphp-default-version
       ;;
       5)
-      yum install -y php71-php-litespeed php71-php-bcmath php71-php-gd php71-php-json php71-php-mbstring php71-php-mcrypt php71-php-mysqlnd php71-php-opcache php71-php-pdo php71-php-pecl-crypto php71-php-pecl-mcrypt php71-php-pecl-geoip php71-php-pecl-zip php71-php-recode php71-php-snmp php71-php-soap php71-php-xml
+      yum install -y php71-php-litespeed php71-php-cli php71-php-bcmath php71-php-gd php71-php-json php71-php-mbstring php71-php-mcrypt php71-php-mysqlnd php71-php-opcache php71-php-pdo php71-php-pecl-crypto php71-php-pecl-mcrypt php71-php-pecl-geoip php71-php-pecl-zip php71-php-recode php71-php-snmp php71-php-soap php71-php-xml
       ln -s /opt/remi/php71/root/usr/bin/php /usr/sbin/php-check
       touch /usr/share/lsphp-default-version
       echo "lsphp71" > /usr/share/lsphp-default-version
       ;;
       6)
-      yum install -y php72-php-litespeed php72-php-bcmath php72-php-gd php72-php-json php72-php-mbstring php72-php-mcrypt php72-php-mysqlnd php72-php-opcache php72-php-pdo php72-php-pecl-crypto php72-php-pecl-mcrypt php72-php-pecl-geoip php72-php-pecl-zip php72-php-recode php72-php-snmp php72-php-soap php72-php-xml
+      yum install -y php72-php-litespeed php72-php-cli php72-php-bcmath php72-php-gd php72-php-json php72-php-mbstring php72-php-mcrypt php72-php-mysqlnd php72-php-opcache php72-php-pdo php72-php-pecl-crypto php72-php-pecl-mcrypt php72-php-pecl-geoip php72-php-pecl-zip php72-php-recode php72-php-snmp php72-php-soap php72-php-xml
       ln -s /opt/remi/php72/root/usr/bin/php /usr/sbin/php-check
       touch /usr/share/lsphp-default-version
       echo "lsphp72" > /usr/share/lsphp-default-version
       ;;
       7)
-      yum install -y php73-php-litespeed php73-php-bcmath php73-php-gd php73-php-json php73-php-mbstring php73-php-mcrypt php73-php-mysqlnd php73-php-opcache php73-php-pdo php73-php-pecl-crypto php73-php-pecl-mcrypt php73-php-pecl-geoip php73-php-pecl-zip php73-php-recode php73-php-snmp php73-php-soap php73-php-xml
+      yum install -y php73-php-litespeed php73-php-cli php73-php-bcmath php73-php-gd php73-php-json php73-php-mbstring php73-php-mcrypt php73-php-mysqlnd php73-php-opcache php73-php-pdo php73-php-pecl-crypto php73-php-pecl-mcrypt php73-php-pecl-geoip php73-php-pecl-zip php73-php-recode php73-php-snmp php73-php-soap php73-php-xml
       ln -s /opt/remi/php73/root/usr/bin/php /usr/sbin/php-check
       touch /usr/share/lsphp-default-version
       echo "lsphp73" > /usr/share/lsphp-default-version
@@ -469,6 +469,8 @@ runInstall(){
     LSPASSRAND=`head -c 100 /dev/urandom | tr -dc a-z0-9A-Z |head -c 16`
     ENCRYPT_PASS=`/usr/local/lsws/admin/fcgi-bin/admin_php5 -q /usr/local/lsws/admin/misc/htpasswd.php $LSPASSRAND`
     echo "llstackadmin:$ENCRYPT_PASS" > /usr/local/lsws/admin/conf/htpasswd 
+    touch /usr/local/lsws/admin/conf/defaulthtpasswd
+    echo "llstackadmin:$LSPASSRAND" > /usr/local/lsws/admin/conf/defaulthtpasswd 
     systemctl restart lsws.service
   fi
 

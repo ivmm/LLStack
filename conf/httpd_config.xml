@@ -19,7 +19,7 @@
   <logging>
     <log>
       <fileName>$SERVER_ROOT/logs/error.log</fileName>
-      <logLevel>DEBUG</logLevel>
+      <logLevel>WARN</logLevel>
       <debugLevel>0</debugLevel>
       <rollingSize>10M</rollingSize>
       <enableStderrLog>1</enableStderrLog>
@@ -29,7 +29,7 @@
       <fileName>$SERVER_ROOT/logs/access.log</fileName>
       <rollingSize>10M</rollingSize>
       <keepDays>30</keepDays>
-      <compressArchive>0</compressArchive>
+      <compressArchive>1</compressArchive>
     </accessLog>
   </logging>
   <indexFiles>index.html, index.php</indexFiles>

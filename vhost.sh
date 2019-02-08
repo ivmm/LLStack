@@ -117,6 +117,22 @@ l4="<\/vhostMap>"
 lend="<\/vhostMapList>"
 sed -i 's/'$lend'/'$l1'\n'$l2'\n'$l3'\n'$l4'\n&/' /usr/local/lsws/conf/httpd_config.xml
 
+if [ "$add_more_domainame" = 'y' ] || [ "$add_more_domainame" = 'Y' ]; then
+l1="<vhostMap>"
+l2="<vhost>$domain<\/vhost>"
+l3="<domain>$domain,$moredomain<\/domain>"
+l4="<\/vhostMap>"
+lend="<\/vhostMapList>"
+sed -i 's/'$lend'/'$l1'\n'$l2'\n'$l3'\n'$l4'\n&/' /usr/local/lsws/conf/httpd_config.xml
+else
+l1="<vhostMap>"
+l2="<vhost>$domain<\/vhost>"
+l3="<domain>$domain<\/domain>"
+l4="<\/vhostMap>"
+lend="<\/vhostMapList>"
+sed -i 's/'$lend'/'$l1'\n'$l2'\n'$l3'\n'$l4'\n&/' /usr/local/lsws/conf/httpd_config.xml
+fi
+
 #add vhost conf
 cat >>/usr/local/lsws/conf/vhosts/$domain.xml<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
