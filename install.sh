@@ -351,9 +351,12 @@ runInstall(){
     chown -R lsadm:lsadm /usr/local/lsws/conf/vhosts/
 
     mkdir -p /home/demo/{public_html,logs,ssl,cgi-bin,cache}
-    chown -R nobody:nobody /home/demo/public_html
 
     cp -a /tmp/LLStack-${envType}/home/demo/public_html/* /home/demo/public_html/
+    cp -a /tmp/LLStack-${envType}/home/demo/ssl/* /home/demo/ssl/
+
+    chown -R nobody:nobody /home/demo/public_html
+    chown -R lsadm:lsadm /home/demo/ssl
 
     if [ "${acnoV}" != '' ]; then
         touch /root/serial.no
@@ -469,8 +472,8 @@ runInstall(){
     LSPASSRAND=`head -c 100 /dev/urandom | tr -dc a-z0-9A-Z |head -c 16`
     ENCRYPT_PASS=`/usr/local/lsws/admin/fcgi-bin/admin_php5 -q /usr/local/lsws/admin/misc/htpasswd.php $LSPASSRAND`
     echo "llstackadmin:$ENCRYPT_PASS" > /usr/local/lsws/admin/conf/htpasswd 
-    touch /usr/local/lsws/admin/conf/defaulthtpasswd
-    echo "llstackadmin:$LSPASSRAND" > /usr/local/lsws/admin/conf/defaulthtpasswd 
+    touch /root/defaulthtpasswd
+    echo "llstackadmin:$LSPASSRAND" > /root/defaulthtpasswd
     systemctl restart lsws.service
   fi
 

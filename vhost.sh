@@ -75,6 +75,21 @@ if [ "$add_more_domainame" = 'y' ] || [ "$add_more_domainame" = 'Y' ]; then
   echo "==========================="
   moredomainame=" $moredomain"
 fi
+
+#Enable SSL
+read -p "Do you want to enable HTTPS? (y/n)" enablessl
+    
+if [ "$enablessl" = 'y' ] || [ "$enablessl" = 'Y' ]; then
+  echo "Please input the Private Key File Path"
+  read -p "Example:/home/demo/ssl/www.mf8.biz.key" privatekeypath
+  echo "Please input the Certificate File Path"
+  read -p "Example:/home/demo/ssl/www.mf8.biz.crt" certificatepath
+  read -p "Do you want to enable HTTP/3(QUIC)? (y/n)" enablequic
+  echo "==========================="
+  echo Private Key File Path="$privatekeypath"
+  echo Private Key File Path="$certificatepath"
+  echo "==========================="
+fi
     
 get_char() {
   SAVEDSTTY=`stty -g`
@@ -109,12 +124,139 @@ v10="<\/virtualHost>"
 vend="<\/virtualHostList>"
 sed -i 's/'$vend'/'$v1'\n'$v2'\n'$v3'\n'$v4'\n'$v5'\n'$v6'\n'$v7'\n'$v8'\n'$v9'\n'$v10'\n&/' /usr/local/lsws/conf/httpd_config.xml
 
-#add httpd conf listen
+if [ "$enablessl" = 'y' ] || [ "$enablessl" = 'Y' ]; then
+
+#add httpd conf listen (https)
 l1="<vhostMap>"
 l2="<vhost>$domain<\/vhost>"
 l3="<domain>$domain,$moredomain<\/domain>"
 l4="<\/vhostMap>"
 lend="<\/vhostMapList>"
+sed -i 's/'$lend'/'$l1'\n'$l2'\n'$l3'\n'$l4'\n&/' /usr/local/lsws/conf/httpd_config.xml
+
+  if [ "$add_more_domainame" = 'y' ] || [ "$add_more_domainame" = 'Y' ]; then
+    l1="<vhostMap>"
+    l2="<vhost>$domain<\/vhost>"
+    l3="<domain>$domain,$moredomain<\/domain>"
+    l4="<\/vhostMap>"
+    lend="<\/vhostMapList>"
+    sed -i 's/'$lend'/'$l1'\n'$l2'\n'$l3'\n'$l4'\n&/' /usr/local/lsws/conf/httpd_config.xml
+  else
+    l1="<vhostMap>"
+    l2="<vhost>$domain<\/vhost>"
+    l3="<domain>$domain<\/domain>"
+    l4="<\/vhostMap>"
+    lend="<\/vhostMapList>"
+    sed -i 's/'$lend'/'$l1'\n'$l2'\n'$l3'\n'$l4'\n&/' /usr/local/lsws/conf/httpd_config.xml
+  fi
+
+#add vhost conf (https)
+cat >>/usr/local/lsws/conf/vhosts/$domain.xml<<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<virtualHostConfig>
+  <docRoot>/home/$domain/public_html</docRoot>
+  <adminEmails>$webmasteremail</adminEmails>
+  <enableGzip>1</enableGzip>
+  <logging>
+    <log>
+      <useServer>1</useServer>
+      <fileName>/home/$domain/logs/$domain_errors.log</fileName>
+      <logLevel>ERROR</logLevel>
+      <rollingSize>100M</rollingSize>
+    </log>
+    <accessLog>
+      <useServer>0</useServer>
+      <fileName>/home/$domain/logs/$domain.access.log</fileName>
+      <logHeaders>3</logHeaders>
+      <rollingSize>100M</rollingSize>
+      <keepDays>30</keepDays>
+      <compressArchive>1</compressArchive>
+    </accessLog>
+  </logging>
+  <index>
+    <useServer>0</useServer>
+    <indexFiles>index.html, index.htm, index.php</indexFiles>
+  </index>
+  <scriptHandlerList>
+    <scriptHandler>
+      <suffix>php</suffix>
+      <type>lsapi</type>
+      <handler>$lsphpversion</handler>
+    </scriptHandler>
+  </scriptHandlerList>
+  <expires>
+    <enableExpires>1</enableExpires>
+  </expires>
+  <cache>
+    <storage>
+      <cacheStorePath>/home/$domain/cache</cacheStorePath>
+      <litemage>0</litemage>
+    </storage>
+  </cache>
+  <extProcessorList>
+    <extProcessor>
+      <type>lsapi</type>
+      <name>$lsphpversion</name>
+      <address>uds://tmp/lshttpd/$domain-$lsphpversion.sock</address>
+      <maxConns>35</maxConns>
+      <env>PHP_LSAPI_MAX_REQUESTS=5000</env>
+      <env>PHP_LSAPI_CHILDREN=35</env>
+      <initTimeout>180</initTimeout>
+      <retryTimeout>0</retryTimeout>
+      <persistConn>1</persistConn>
+      <pcKeepAliveTimeout>30</pcKeepAliveTimeout>
+      <respBuffer>0</respBuffer>
+      <autoStart>1</autoStart>
+      <path>/usr/bin/$lsphpversion</path>
+      <backlog>100</backlog>
+      <instances>1</instances>
+      <extMaxIdleTime>10</extMaxIdleTime>
+      <priority>0</priority>
+      <memSoftLimit>1024M</memSoftLimit>
+      <memHardLimit>1024M</memHardLimit>
+      <procSoftLimit>400</procSoftLimit>
+      <procHardLimit>500</procHardLimit>
+    </extProcessor>
+  </extProcessorList>
+  <contextList>
+    <context>
+      <type>cgi</type>
+      <uri>/cgi-bin/</uri>
+      <location>/home/$domain/cgi-bin/</location>
+      <accessControl>
+      </accessControl>
+      <rewrite>
+      </rewrite>
+      <cachePolicy>
+      </cachePolicy>
+      <addDefaultCharset>off</addDefaultCharset>
+    </context>
+  </contextList>
+  <vhssl>
+    <keyFile>$privatekeypath</keyFile>
+    <certFile>$certificatepath</certFile>
+    <certChain>1</certChain>
+    <renegProtection>1</renegProtection>
+    <sslSessionCache>1</sslSessionCache>
+    <sslSessionTickets>1</sslSessionTickets>
+    <enableSpdy>4</enableSpdy>
+    <enableQuic>0</enableQuic>
+  </vhssl>
+</virtualHostConfig>
+EOF
+
+    if [ "$enablequic" = 'y' ] || [ "$enablequic" = 'Y' ]; then
+      sed -i "s@<enableQuic>0</enableQuic>@<enableQuic>1</enableQuic>@g" /usr/local/lsws/conf/vhosts/LLStack-demo.xml
+    fi
+
+else 
+
+#add httpd conf listen(http)
+l1="<vhostMap>"
+l2="<vhost>$domain<\/vhost>"
+l3="<domain>$domain,$moredomain<\/domain>"
+l4="<\/vhostMap>"
+lend="<\/vhostMapList><!--HTTP-->"
 sed -i 's/'$lend'/'$l1'\n'$l2'\n'$l3'\n'$l4'\n&/' /usr/local/lsws/conf/httpd_config.xml
 
 if [ "$add_more_domainame" = 'y' ] || [ "$add_more_domainame" = 'Y' ]; then
@@ -122,18 +264,18 @@ l1="<vhostMap>"
 l2="<vhost>$domain<\/vhost>"
 l3="<domain>$domain,$moredomain<\/domain>"
 l4="<\/vhostMap>"
-lend="<\/vhostMapList>"
+lend="<\/vhostMapList><!--HTTP-->"
 sed -i 's/'$lend'/'$l1'\n'$l2'\n'$l3'\n'$l4'\n&/' /usr/local/lsws/conf/httpd_config.xml
 else
 l1="<vhostMap>"
 l2="<vhost>$domain<\/vhost>"
 l3="<domain>$domain<\/domain>"
 l4="<\/vhostMap>"
-lend="<\/vhostMapList>"
+lend="<\/vhostMapList><!--HTTP-->"
 sed -i 's/'$lend'/'$l1'\n'$l2'\n'$l3'\n'$l4'\n&/' /usr/local/lsws/conf/httpd_config.xml
 fi
 
-#add vhost conf
+#add vhost conf (http)
 cat >>/usr/local/lsws/conf/vhosts/$domain.xml<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <virtualHostConfig>
@@ -217,6 +359,8 @@ cat >>/usr/local/lsws/conf/vhosts/$domain.xml<<EOF
   </contextList>
 </virtualHostConfig>
 EOF
+
+fi
 
 chown -R lsadm:lsadm /usr/local/lsws/conf/vhosts/$domain.xml
 

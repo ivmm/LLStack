@@ -205,7 +205,7 @@
   </virtualHostList>
   <listenerList>
     <listener>
-      <name>LLStack</name>
+      <name>HTTP</name>
       <address>*:80</address>
       <secure>0</secure>
       <vhostMapList>
@@ -213,7 +213,21 @@
           <vhost>LLStack-demo</vhost>
           <domain>*</domain>
         </vhostMap>
-      </vhostMapList>
+      </vhostMapList><!--HTTP-->
+    </listener>
+    <listener>
+      <name>HTTPS</name>
+      <address>*:443</address>
+      <secure>1</secure>
+      <keyFile>/home/demo/ssl/server.key</keyFile>
+      <certFile>/home/demo/ssl/server.crt</certFile>
+      <certChain>1</certChain>
+      <sslProtocol>30</sslProtocol>
+      <ciphers>TLS13-AES-256-GCM-SHA384:TLS13-CHACHA20-POLY1305-SHA256:TLS13-AES-128-GCM-SHA256:TLS13-AES-128-CCM-8-SHA256:TLS13-AES-128-CCM-SHA256:EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AES128:EECDH+aRSA+AES128:RSA+AES128:EECDH+ECDSA+AES256:EECDH+aRSA+AES256:RSA+AES256:EECDH+ECDSA+3DES:EECDH+aRSA+3DES:RSA+3DES:!MD5;</ciphers>
+      <renegProtection>1</renegProtection>
+      <sslSessionCache>1</sslSessionCache>
+      <sslSessionTickets>1</sslSessionTickets>
+      <enableSpdy>4</enableSpdy>
     </listener>
   </listenerList>
 </httpServerConfig>
