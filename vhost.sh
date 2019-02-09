@@ -89,6 +89,8 @@ if [ "$enablessl" = 'y' ] || [ "$enablessl" = 'Y' ]; then
   echo Private Key File Path="$privatekeypath"
   echo Certificate File Path="$certificatepath"
   echo "==========================="
+  chown lsadm:lsadm $privatekeypath
+  chown lsadm:lsadm $certificatepath
 fi
     
 get_char() {
@@ -108,8 +110,6 @@ char=`get_char`
 #Mkdir for vhost
 mkdir -p /home/$domain/{public_html,logs,ssl,cgi-bin,cache}
 chown -R nobody:nobody /home/$domain/public_html
-chown lsadm:lsadmin $privatekeypath
-chown lsadm:lsadmin $certificatepath
 
 #add httpd conf Virtual host
 cp -f /usr/local/lsws/conf/httpd_config.xml /usr/local/lsws/conf/httpd_config.xml.bak
@@ -248,7 +248,7 @@ cat >>/usr/local/lsws/conf/vhosts/$domain.xml<<EOF
 EOF
 
     if [ "$enablequic" = 'y' ] || [ "$enablequic" = 'Y' ]; then
-      sed -i "s@<enableQuic>0<\/enableQuic>@<enableQuic>1<\/enableQuic>@g" /usr/local/lsws/conf/vhosts/$domain.xml
+      sed -i "s@<enableQuic>0</enableQuic>@<enableQuic>1</enableQuic>@g" /usr/local/lsws/conf/vhosts/$domain.xml
     fi
 
 else 
