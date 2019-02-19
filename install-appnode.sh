@@ -252,42 +252,42 @@ runInstall(){
       echo "lsphp54" > /usr/share/lsphp-default-version
       ;;
       2)
-      yum install -y php55-php-litespeed
+      yum install -y appnode-php55-php-litespeed
       ln -s /opt/appnode/appnode-php55/root/usr/bin/php /usr/sbin/php-check
       ln -s /usr/bin/lsappnode-php55 /usr/bin/lsphp55
       touch /usr/share/lsphp-default-version
       echo "lsphp55" > /usr/share/lsphp-default-version
       ;;
       3)
-      yum install -y php56-php-litespeed 
+      yum install -y appnode-php56-php-litespeed 
       ln -s /opt/appnode/appnode-php56/root/usr/bin/php /usr/sbin/php-check
       ln -s /usr/bin/lsappnode-php56 /usr/bin/lsphp56
       touch /usr/share/lsphp-default-version
       echo "lsphp56" > /usr/share/lsphp-default-version
       ;;
       4)
-      yum install -y php70-php-litespeed
+      yum install -y appnode-php70-php-litespeed
       ln -s /opt/appnode/appnode-php70/root/usr/bin/php /usr/sbin/php-check
       ln -s /usr/bin/lsappnode-php70 /usr/bin/lsphp70
       touch /usr/share/lsphp-default-version
       echo "lsphp70" > /usr/share/lsphp-default-version
       ;;
       5)
-      yum install -y php71-php-litespeed
+      yum install -y appnode-php71-php-litespeed
       ln -s /opt/appnode/appnode-php71/root/usr/bin/php /usr/sbin/php-check
       ln -s /usr/bin/lsappnode-php71 /usr/bin/lsphp71
       touch /usr/share/lsphp-default-version
       echo "lsphp71" > /usr/share/lsphp-default-version
       ;;
       6)
-      yum install -y php72-php-litespeed
+      yum install -y appnode-php72-php-litespeed
       ln -s /opt/appnode/appnode-php72/root/usr/bin/php /usr/sbin/php-check
       ln -s /usr/bin/lsappnode-php72 /usr/bin/lsphp72
       touch /usr/share/lsphp-default-version
       echo "lsphp72" > /usr/share/lsphp-default-version
       ;;
       7)
-      yum install -y php73-php-litespeed
+      yum install -y appnode-php73-php-litespeed
       ln -s /opt/appnode/appnode-php73/root/usr/bin/php /usr/sbin/php-check
       ln -s /usr/bin/lsappnode-php73 /usr/bin/lsphp73
       touch /usr/share/lsphp-default-version
@@ -297,6 +297,7 @@ runInstall(){
   fi
 
   if [ "${LiteSpeedV}" != '0' ]; then
+    yum remove httpd appnode-php72-php -y
     rpm -Uvh ${LiteSpeedRepoUrl}/centos/litespeed-repo-1.1-1.el7.noarch.rpm
 
     LiteSpeedRepo=/etc/yum.repos.d/litespeed.repo
@@ -422,6 +423,7 @@ runInstall(){
     fi
   fi
 
+  if [ "${dbV}" = "2" ]; then
   mkdir -p /home/demo/public_html/phpMyAdmin/tmp/
   chmod 0777 /home/demo/public_html/phpMyAdmin/tmp/
   cp /home/demo/public_html/phpMyAdmin/libraries/config.default.php /home/demo/public_html/phpMyAdmin/config.inc.php
@@ -429,6 +431,7 @@ runInstall(){
   sed -i "s@SaveDir.*@SaveDir'\] = 'save';@" /home/demo/public_html/phpMyAdmin/config.inc.php
   sed -i "s@host'\].*@host'\] = '127.0.0.1';@" /home/demo/public_html/phpMyAdmin/config.inc.php
   sed -i "s@blowfish_secret.*;@blowfish_secret\'\] = \'$(cat /dev/urandom | head -1 | base64 | head -c 45)\';@" /home/demo/public_html/phpMyAdmin/config.inc.php
+  fi
 
   showNotice "Start service"
 

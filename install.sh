@@ -431,6 +431,7 @@ runInstall(){
     fi
   fi
 
+  if [ "${dbV}" = "2" ]; then
   mkdir -p /home/demo/public_html/phpMyAdmin/tmp/
   chmod 0777 /home/demo/public_html/phpMyAdmin/tmp/
   cp /home/demo/public_html/phpMyAdmin/libraries/config.default.php /home/demo/public_html/phpMyAdmin/config.inc.php
@@ -438,7 +439,8 @@ runInstall(){
   sed -i "s@SaveDir.*@SaveDir'\] = 'save';@" /home/demo/public_html/phpMyAdmin/config.inc.php
   sed -i "s@host'\].*@host'\] = '127.0.0.1';@" /home/demo/public_html/phpMyAdmin/config.inc.php
   sed -i "s@blowfish_secret.*;@blowfish_secret\'\] = \'$(cat /dev/urandom | head -1 | base64 | head -c 45)\';@" /home/demo/public_html/phpMyAdmin/config.inc.php
-
+  fi
+  
   showNotice "Start service"
 
   systemctl enable firewalld.service
