@@ -297,6 +297,7 @@ runInstall(){
   fi
 
   if [ "${LiteSpeedV}" != '0' ]; then
+    systemctl stop httpd.service  
     yum remove httpd appnode-php72-php -y
     rpm -Uvh ${LiteSpeedRepoUrl}/centos/litespeed-repo-1.1-1.el7.noarch.rpm
 
