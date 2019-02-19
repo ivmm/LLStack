@@ -436,14 +436,6 @@ runInstall(){
 
   showNotice "Start service"
 
-  systemctl enable firewalld.service
-  systemctl restart firewalld.service
-
-  firewall-cmd --permanent --zone=public --add-service=http
-  firewall-cmd --permanent --zone=public --add-service=https
-  firewall-cmd --permanent --zone=public --add-port=7080/tcp
-  firewall-cmd --reload
-
   if [ "${mysqlV}" != '0' ]; then
     if [[ "${mysqlV}" = '1' || "${mysqlV}" = '2' ]]; then
       service mysql start
