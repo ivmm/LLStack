@@ -187,7 +187,7 @@ runInstall(){
     LiteSpeedRepoUrl=${LiteSpeedUrl_CN}
   fi
 
-  yum install -y epel-release yum-utils firewalld firewall-config
+  yum install -y epel-release yum-utils iptables iptables-services
 
   if [ "${mysqlV}" != '0' ]; then
   yum -y remove mariadb*
