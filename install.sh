@@ -370,7 +370,7 @@ runInstall(){
       cp -a /root/trial.key /usr/local/lsws/conf/trial.key
       /usr/local/lsws/bin/lshttpd -r
     else
-       wget -q -t 1 -T 3 --output-document=/usr/local/lsws/conf/trial.key http://license2.litespeedtech.com/reseller/trial.key
+       wget -q -t 1 -T 3 --output-document=/usr/local/lsws/conf/trial.key http://license.litespeedtech.com/reseller/trial.key
     fi
 
 
