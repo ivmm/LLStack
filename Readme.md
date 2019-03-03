@@ -1,3 +1,5 @@
+![](https://www.llstack.com/llstack.svg)
+
 # 什么是 LLStack ？
 
 LLStack 全称是 “Linux LiteSpeed Stack”，即在 Linux 上安装 LiteSpeed + PHP + MySQL/MariaDB（可选）的高性能 Web 运行环境，特别适合运行 PHP 程序。
