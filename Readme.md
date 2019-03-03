@@ -1,4 +1,4 @@
-![](https://www.llstack.com/llstack.png)
+![](https://www.llstack.com/favicon.png)
 
 # 什么是 LLStack ？
 
